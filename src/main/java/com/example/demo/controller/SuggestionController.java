@@ -1,11 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.bo.CreateSuggestionRequest;
-import com.example.demo.bo.UserResponse;
 import com.example.demo.entity.GuestSuggestionEntity;
 import com.example.demo.service.GuestSuggestionService;
-import com.example.demo.service.GuestSuggestionServiceImpl;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +17,6 @@ public class SuggestionController {
 
     private final GuestSuggestionService guestSuggestionService;
 
-    // Constructor-based Dependency Injection
     public SuggestionController(GuestSuggestionService guestSuggestionService) {
         this.guestSuggestionService = guestSuggestionService;
     }
@@ -28,7 +24,7 @@ public class SuggestionController {
     @PostMapping("/receive")
     public ResponseEntity<Object> receiveSuggestion(@RequestBody CreateSuggestionRequest request) {
         try {
-            guestSuggestionService.processSuggestion(request.getSuggestionText(), request.getRate());
+            guestSuggestionService.processSuggestion(request.getSuggestionText(), request.getRate(), request.getStatus());
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Suggestion processed successfully.");
         } catch (Exception e) {
